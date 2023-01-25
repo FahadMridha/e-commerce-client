@@ -2,9 +2,10 @@ import { Navbar } from "flowbite-react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo/repliq2x-logo.png";
-import AuthProvider from "../../Contexts/AuthProvider/AuthProvider";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import { BiCartAlt } from "react-icons/bi";
 const NavBar = () => {
-  //   const { user } = useContext(AuthProvider);
+  const { user } = useContext(AuthContext);
   return (
     <div className="bg-white border-b">
       <div className="container mx-auto px-2">
@@ -26,28 +27,33 @@ const NavBar = () => {
             <Link className="hover:text-blue-500" to="/">
               Home
             </Link>
-            {/* {user?.uid && (
+            <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/products">
+              Products
+            </Link>
+            {user?.uid && (
               <Link
                 className="hover:text-blue-500 mt-4 md:mt-0"
                 to="/dashboard"
               >
                 Dashboard
               </Link>
-            )} */}
+            )}
             <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/careers">
               Careers
             </Link>
             <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/">
               About
             </Link>
-            <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/">
-              Services
+            <Link className="hover:text-blue-500  mt-4 md:mt-0" to="/mycart">
+              <>
+                <BiCartAlt className="w-5 h-6" />
+              </>
             </Link>
-            {/* {!user && (
+            {!user && (
               <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/login">
                 Login
               </Link>
-            )} */}
+            )}
           </Navbar.Collapse>
         </Navbar>
       </div>
