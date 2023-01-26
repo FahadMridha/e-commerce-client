@@ -5,7 +5,9 @@ import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const CheckOut = () => {
   const { user } = useContext(AuthContext);
-  const { name, price, picture, _id } = useLoaderData();
+  const data = useLoaderData();
+  console.log(data);
+  const { name, price, picture, _id } = data;
   const handlePlaceOrder = (event) => {
     event.preventDefault();
     const form = event.target;

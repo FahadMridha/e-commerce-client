@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../Layouts/DashboardLayout/DashboardLayout";
 import MainLoyout from "../Layouts/MainLayout/MainLoyout";
 import Login from "../Pages/Authentication/Login/Login";
+import SignUp from "../Pages/Authentication/SignUp";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import Home from "../Pages/HomePage/Home/Home";
 import MyCart from "../Pages/myCart/MyCart";
 import CheckOut from "../Pages/Products/Components/CheckOut";
@@ -26,10 +29,6 @@ const router = createBrowserRouter([
         element: <ViewDetails />,
       },
       {
-        path: "/order",
-        element: <PrivateRoute>{/* <Order></Order> */}</PrivateRoute>,
-      },
-      {
         path: "/checkout/:id",
         element: (
           <PrivateRoute>
@@ -37,9 +36,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://e-commerce-task-server.vercel.app/product/${params.id}`
-          ),
+          fetch(`http://localhost:5000/product/${params.id}`),
       },
       {
         path: "/mycart",
@@ -49,6 +46,52 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
+      },
+      // {
+      //   path: "/dashboard/employees",
+      //   element: <Employees></Employees>,
+      // },
+      // {
+      //   path: "/dashboard/payroll",
+      //   element: <Payroll></Payroll>,
+      // },
+      // {
+      //   path: "/dashboard/admins",
+      //   element: <Admins></Admins>,
+      // },
+      // {
+      //   path: "/dashboard/candidates",
+      //   element: <Candidates></Candidates>,
+      // },
+      // {
+      //   path: "/dashboard/departments",
+      //   element: <Departments></Departments>,
+      // },
+      // {
+      //   path: "/dashboard/accounts",
+      //   element: <Accounts></Accounts>,
+      // },
+      // {
+      //   path: "/dashboard/holidays",
+      //   element: <Holidays></Holidays>,
+      // },
+      // {
+      //   path: "/dashboard/events",
+      //   element: <Events></Events>,
+      // },
     ],
   },
 ]);

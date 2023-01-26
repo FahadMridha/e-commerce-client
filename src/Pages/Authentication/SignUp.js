@@ -1,39 +1,76 @@
+import { Spinner } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import image_Login from "../../../Assets/loginePage/loginImage.svg";
-import { Spinner } from "flowbite-react";
-import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import image_Login from "../../Assets/loginePage/loginImage.svg";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
-const Login = () => {
+// import useToken from "../../hooks/useToken";
+
+const SignUp = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { signIn, loading, setLoading } = useContext(AuthContext);
+  const { createUser, updateUser, loading, setLoading } =
+    useContext(AuthContext);
+  const [signUpError, setSignUpError] = useState("");
 
-  const [loginError, setLoginError] = useState("");
-
-  // using location
+  const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
-
-  const handleLogin = (data) => {
-    setLoginError("");
-    const { email, password } = data;
-    signIn(email, password)
+  const [createUserEmail, setCreateUserEmail] = useState("");
+  //   const [token] = useToken(createUserEmail);
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  const handlerSignUp = (data) => {
+    setSignupError("");
+    const { email, password, name, role } = data;
+    createUser(email, password)
       .then((result) => {
-        navigate(from, { replace: true });
+        const user = result.user;
+        toast("Successfully create user", {
+          icon: "👏",
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+        const userInfo = {
+          displayName: name,
+        };
+        updateUser(userInfo)
+          .then(() => {
+            saveUserToDb(name, email, role);
+          })
+          .catch((error) => console.log(error));
+        console.log(user);
       })
       .catch((error) => {
-        setLoading(false);
-        console.log(error.massage);
-        setLoginError(error.message);
+        setSignupError(error.message);
+        console.log(error);
       });
   };
+  const saveUserToDb = (name, email, role) => {
+    const user = { name, email, role };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCreateUserEmail(email);
+      });
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center bg-lime-100 py-16 lg:pl-16">
@@ -42,8 +79,26 @@ const Login = () => {
         </div>
         <div className="w-96 mx-auto p-8 rounded-lg flex justify-center items-center bg-white ">
           <div className="w-72 py-8">
-            <h3 className="text-2xl text-center mb-8"> LOGIN</h3>
-            <form className="" onSubmit={handleSubmit(handleLogin)}>
+            <h3 className="text-2xl text-center mb-8">Sign Up</h3>
+            <form className="" onSubmit={handleSubmit(handlerSignUp)}>
+              <div className="form-control w-full mb-4">
+                <label className="label mb-2 font-semibold">
+                  <span className="label-text">Your Name</span>
+                </label>
+                <input
+                  {...register("name", {
+                    required: "Name  is required",
+                  })}
+                  placeholder="Enter Your Name"
+                  type="text"
+                  className="input  rounded input-bordered w-full mt-2 "
+                />
+                {errors.email && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.email?.message}
+                  </p>
+                )}
+              </div>
               <div className="form-control w-full mb-4">
                 <label className="label mb-2 font-semibold">
                   <span className="label-text">Email</span>
@@ -101,20 +156,17 @@ const Login = () => {
                     <Spinner />
                   </span>
                 ) : (
-                  "Login"
+                  "Sign Up"
                 )}
               </button>
             </form>
             <div>
-              {loginError && <p className="text-red-600">{loginError}</p>}
+              {signUpError && <p className="text-red-600">{signUpError}</p>}
             </div>
             <p className="mt-2 text-sm">
-              Don't have an account yet?
-              <Link
-                to="/signup"
-                className=" ml-1 text-blue-600 hover:underline"
-              >
-                Sign Up
+              Alredy have an account?
+              <Link to="/login" className=" ml-1 text-blue-600 hover:underline">
+                Login here
               </Link>
             </p>
           </div>
@@ -124,4 +176,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

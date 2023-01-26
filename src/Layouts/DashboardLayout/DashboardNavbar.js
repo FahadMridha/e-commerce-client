@@ -1,0 +1,49 @@
+import { Navbar } from "flowbite-react";
+import React, { useContext } from "react";
+import { FaEnvelope, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { BsFillBellFill } from "react-icons/bs";
+
+import { useUtils } from "../../Contexts/UtilsProvider";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+
+const DashboardNavbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  //   const { dashboardTitle } = useUtils();
+  return (
+    <div className="dashboard-nav text-center border-b border-white py-4">
+      <Navbar fluid={true} className="bg-inherit">
+        <Navbar.Brand>
+          <span className="self-center whitespace-nowrap text-primary dark:text-white font-medium">
+            {"Dashboard"}
+          </span>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse>
+          <Navbar.Link href="#" className="mt-[3px]">
+            <button>
+              <FaEnvelope />
+            </button>
+          </Navbar.Link>
+          <Navbar.Link href="#" className="mt-[3px]">
+            <button>
+              <BsFillBellFill />
+            </button>
+          </Navbar.Link>
+          <Navbar.Link href="#" className="mt-[3px]">
+            <button>
+              <FaUser />
+            </button>
+          </Navbar.Link>
+          <Navbar.Link href="#" className="mt-[3px]">
+            <button onClick={logOut}>
+              <FaSignOutAlt />
+            </button>
+          </Navbar.Link>
+          <Navbar.Link>{user?.email}</Navbar.Link>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  );
+};
+
+export default DashboardNavbar;
