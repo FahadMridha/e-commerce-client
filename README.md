@@ -1,8 +1,8 @@
-# Ok-Buy
+# A-Z.com
 
 ## Ecommerce Website
 
-#### External Packages used:
+#### 3rd party Packages used:
 
 #### axios
 
