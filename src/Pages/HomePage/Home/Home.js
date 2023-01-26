@@ -1,9 +1,14 @@
 import React from "react";
+import Products from "../../Products/Products";
+import Contact from "../Components/ContuctUs";
+import Testimonial from "../Components/Testmonial";
 
 const Home = () => {
   return (
     <main>
-      <h2>home</h2>
+      <Products />
+      <Testimonial />
+      <Contact />
     </main>
   );
 };

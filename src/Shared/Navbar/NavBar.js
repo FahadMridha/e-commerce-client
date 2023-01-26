@@ -1,11 +1,22 @@
 import { Navbar } from "flowbite-react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo/repliq2x-logo.png";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import { BiCartAlt } from "react-icons/bi";
+import useAdmin from "../../Hooks/UseAdmin/UseAdmin";
 const NavBar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+  const [isAdmin, isAdminLoading] = useAdmin(user?.email);
+
+  const navigate = useNavigate();
+  const handlarSignOut = () => {
+    logOut()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="bg-white border-b">
       <div className="container mx-auto px-2">
@@ -30,7 +41,7 @@ const NavBar = () => {
             <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/products">
               Products
             </Link>
-            {user?.uid && (
+            {user?.email && isAdmin && (
               <Link
                 className="hover:text-blue-500 mt-4 md:mt-0"
                 to="/dashboard"
@@ -38,9 +49,7 @@ const NavBar = () => {
                 Dashboard
               </Link>
             )}
-            <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/careers">
-              Careers
-            </Link>
+
             <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/">
               About
             </Link>
@@ -49,6 +58,14 @@ const NavBar = () => {
                 <BiCartAlt className="w-5 h-6" />
               </>
             </Link>
+            {user && (
+              <button
+                onClick={handlarSignOut}
+                className="hover:text-blue-500 mt-4 md:mt-0"
+              >
+                LogOut
+              </button>
+            )}
             {!user && (
               <Link className="hover:text-blue-500 mt-4 md:mt-0" to="/login">
                 Login

@@ -3,12 +3,15 @@ import DashboardLayout from "../Layouts/DashboardLayout/DashboardLayout";
 import MainLoyout from "../Layouts/MainLayout/MainLoyout";
 import Login from "../Pages/Authentication/Login/Login";
 import SignUp from "../Pages/Authentication/SignUp";
+import AddCustomer from "../Pages/Dashboard/Customers/AddCustomers";
+import AllCustomers from "../Pages/Dashboard/Customers/AllCustomers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Home from "../Pages/HomePage/Home/Home";
 import MyCart from "../Pages/myCart/MyCart";
 import CheckOut from "../Pages/Products/Components/CheckOut";
 import ViewDetails from "../Pages/Products/Components/ViewDetails";
 import Products from "../Pages/Products/Products";
+import AdminRoutes from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -36,11 +39,17 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/product/${params.id}`),
+          fetch(
+            `https://e-commerce-server-three.vercel.app/product/${params.id}`
+          ),
       },
       {
         path: "/mycart",
-        element: <MyCart />,
+        element: (
+          <PrivateRoute>
+            <MyCart />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -58,40 +67,21 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard></Dashboard>,
+        element: (
+          <AdminRoutes>
+            <Dashboard></Dashboard>
+          </AdminRoutes>
+        ),
       },
-      // {
-      //   path: "/dashboard/employees",
-      //   element: <Employees></Employees>,
-      // },
-      // {
-      //   path: "/dashboard/payroll",
-      //   element: <Payroll></Payroll>,
-      // },
-      // {
-      //   path: "/dashboard/admins",
-      //   element: <Admins></Admins>,
-      // },
-      // {
-      //   path: "/dashboard/candidates",
-      //   element: <Candidates></Candidates>,
-      // },
-      // {
-      //   path: "/dashboard/departments",
-      //   element: <Departments></Departments>,
-      // },
-      // {
-      //   path: "/dashboard/accounts",
-      //   element: <Accounts></Accounts>,
-      // },
-      // {
-      //   path: "/dashboard/holidays",
-      //   element: <Holidays></Holidays>,
-      // },
-      // {
-      //   path: "/dashboard/events",
-      //   element: <Events></Events>,
-      // },
+
+      {
+        path: "/dashboard/addcustomer",
+        element: <AddCustomer />,
+      },
+      {
+        path: "/dashboard/customers",
+        element: <AllCustomers />,
+      },
     ],
   },
 ]);

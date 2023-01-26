@@ -19,6 +19,7 @@ import DashboardNavbar from "./DashboardNavbar";
 
 const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <div className="bg-[#EDEFF3]">
       <div
@@ -74,14 +75,14 @@ const DashboardLayout = () => {
                 </h1>
               </Link>
               <Link
-                to="/dashboard/candidates"
+                to="/dashboard/customers"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
               >
                 {open ? (
                   <FiUsers className={`w-5 h-5 text-yellow-500`} />
                 ) : (
-                  <Tooltip content="Candidates" placement="right" style="light">
+                  <Tooltip content="Customers" placement="right" style="light">
                     <FiUsers className={`w-5 h-5 text-yellow-500`} />
                   </Tooltip>
                 )}
@@ -90,22 +91,18 @@ const DashboardLayout = () => {
                     !open && "scale-0"
                   } duration-200 font-medium`}
                 >
-                  Candidates
+                  Customers
                 </h1>
               </Link>
               <Link
-                to="/dashboard/departments"
+                to="#"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
               >
                 {open ? (
                   <FcDepartment className={`w-5 h-5`} />
                 ) : (
-                  <Tooltip
-                    content="Departments"
-                    placement="right"
-                    style="light"
-                  >
+                  <Tooltip content="Product" placement="right" style="light">
                     <FcDepartment className={`w-5 h-5`} />
                   </Tooltip>
                 )}
@@ -114,19 +111,19 @@ const DashboardLayout = () => {
                     !open && "scale-0"
                   } duration-200 font-medium`}
                 >
-                  Departments
+                  Products
                 </h1>
               </Link>
               <Link
-                to="/dashboard/employees"
+                to="#"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
               >
                 {open ? (
-                  <ImUserTie className={`w-5 h-5 text-blue-600`} />
+                  <FaUmbrellaBeach className={`w-5 h-5 text-orange-400`} />
                 ) : (
-                  <Tooltip content="Employees" placement="right" style="light">
-                    <ImUserTie className={`w-5 h-5 text-blue-600`} />
+                  <Tooltip content="OrderList" placement="right" style="light">
+                    <FaUmbrellaBeach className={`w-5 h-5 text-orange-400`} />
                   </Tooltip>
                 )}
                 <h1
@@ -134,31 +131,11 @@ const DashboardLayout = () => {
                     !open && "scale-0"
                   } duration-200 font-medium`}
                 >
-                  Employees
+                  Order List
                 </h1>
               </Link>
               <Link
-                to="/dashboard/payroll"
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
-              >
-                {open ? (
-                  <FaDollarSign className={`w-5 h-5 text-sky-500`} />
-                ) : (
-                  <Tooltip content="Payroll" placement="right" style="light">
-                    <FaDollarSign className={`w-5 h-5 text-green-500`} />
-                  </Tooltip>
-                )}
-                <h1
-                  className={`origin-left ${
-                    !open && "scale-0"
-                  } duration-200 font-medium`}
-                >
-                  Payroll
-                </h1>
-              </Link>
-              <Link
-                to="/dashboard/admins"
+                to="#"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
               >
@@ -177,50 +154,10 @@ const DashboardLayout = () => {
                   Admins
                 </h1>
               </Link>
-              <Link
-                to="/dashboard/events"
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
-              >
-                {open ? (
-                  <FaRegCalendarAlt className={`w-5 h-5 text-slate-500`} />
-                ) : (
-                  <Tooltip content="Events" placement="right" style="light">
-                    <FaRegCalendarAlt className={`w-5 h-5 text-slate-500`} />
-                  </Tooltip>
-                )}
-                <h1
-                  className={`origin-left ${
-                    !open && "scale-0"
-                  } duration-200 font-medium`}
-                >
-                  Events
-                </h1>
-              </Link>
-              <Link
-                to="/dashboard/holidays"
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 hover:bg-gray-200 rounded-lg mb-3 p-2"
-              >
-                {open ? (
-                  <FaUmbrellaBeach className={`w-5 h-5 text-orange-400`} />
-                ) : (
-                  <Tooltip content="Holidays" placement="right" style="light">
-                    <FaUmbrellaBeach className={`w-5 h-5 text-orange-400`} />
-                  </Tooltip>
-                )}
-                <h1
-                  className={`origin-left ${
-                    !open && "scale-0"
-                  } duration-200 font-medium`}
-                >
-                  Holidays
-                </h1>
-              </Link>
             </div>
           </div>
           <div>
-            <Link to="/dashboard/accounts" className="flex items-center gap-3">
+            <Link to="#" className="flex items-center gap-3">
               <img
                 className="w-9"
                 src="https://w7.pngwing.com/pngs/481/915/png-transparent-computer-icons-user-avatar-woman-avatar-computer-business-conversation-thumbnail.png"
@@ -232,7 +169,7 @@ const DashboardLayout = () => {
                   !open && "scale-0"
                 } duration-200 text-xs font-medium`}
               >
-                Md Maruf Hossain
+                Md Badsha Fahadh
               </h1>
             </Link>
           </div>

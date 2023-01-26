@@ -7,11 +7,14 @@ const MyCart = () => {
   const [orders, setOrder] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("eCommerce-token")}`,
-      },
-    })
+    fetch(
+      `https://e-commerce-server-three.vercel.app/orders?email=${user?.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("eCommerce-token")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => setOrder(data));
   }, [user?.email]);
@@ -21,7 +24,7 @@ const MyCart = () => {
       "Are you sure, you want to delete this order"
     );
     if (proceed) {
-      fetch(`http://localhost:5000/orders/${id}`, {
+      fetch(`https://e-commerce-server-three.vercel.app/orders/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

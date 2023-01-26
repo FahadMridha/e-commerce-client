@@ -17,9 +17,7 @@ const SignUp = () => {
 
   const { createUser, updateUser, loading, setLoading } =
     useContext(AuthContext);
-  const [signUpError, setSignUpError] = useState("");
-
-  const [signupError, setSignupError] = useState("");
+  const [signUpError, setSignupError] = useState("");
   const navigate = useNavigate();
   const [createUserEmail, setCreateUserEmail] = useState("");
   //   const [token] = useToken(createUserEmail);
@@ -27,37 +25,39 @@ const SignUp = () => {
   //     navigate("/");
   //   }
   const handlerSignUp = (data) => {
+    console.log(data);
     setSignupError("");
-    const { email, password, name, role } = data;
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        toast("Successfully create user", {
-          icon: "👏",
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        });
-        const userInfo = {
-          displayName: name,
-        };
-        updateUser(userInfo)
-          .then(() => {
-            saveUserToDb(name, email, role);
-          })
-          .catch((error) => console.log(error));
-        console.log(user);
-      })
-      .catch((error) => {
-        setSignupError(error.message);
-        console.log(error);
+    const { email, password, name } = data;
+    createUser(email, password).then((result) => {
+      const user = result.user;
+      toast("Successfully create user", {
+        icon: "👏",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
       });
+
+      const userInfo = {
+        displayName: name,
+      };
+      updateUser(userInfo)
+        .then(() => {
+          saveUserToDb(name, email);
+        })
+        .catch((error) => console.log(error));
+      console.log(user);
+    });
+    navigate("/").catch((error) => {
+      setSignupError(error.message);
+      console.log(error);
+    });
   };
-  const saveUserToDb = (name, email, role) => {
-    const user = { name, email, role };
-    fetch("http://localhost:5000/users", {
+  const saveUserToDb = (name, email) => {
+    const user = { name, email };
+    console.log(name, email);
+    fetch("https://e-commerce-server-three.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -67,7 +67,7 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setCreateUserEmail(email);
+        // setCreateUserEmail(email);
       });
   };
 
@@ -93,9 +93,9 @@ const SignUp = () => {
                   type="text"
                   className="input  rounded input-bordered w-full mt-2 "
                 />
-                {errors.email && (
+                {errors.name && (
                   <p className="text-red-600 text-sm mt-1">
-                    {errors.email?.message}
+                    {errors.name?.message}
                   </p>
                 )}
               </div>
